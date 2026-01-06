@@ -4,6 +4,7 @@
 #include "./market/DataLoader.hpp"
 #include "./market/Market.hpp"
 #include "./strategy/Strategy.hpp"
+#include "./execution/Broker.hpp"
 #include <iostream>
 
 int main() {
@@ -13,6 +14,7 @@ int main() {
   RSI rsi(14);
   EMA ema(14);
   Strategy strategy(14, 20, 50);
+  Broker broker;
 
   while (market.next()) {
     double close = market.current().close;
@@ -20,6 +22,7 @@ int main() {
     ema.update(close);
     int position = strategy.update(close);
     if (position != 0) {
+      std::cout << "PNL: "<< broker.submitOrder(position, close) << std:: endl;
       std::cout << "Time: " << market.current().timestamp << std::endl;
       std::cout << "Open: " << market.current().open << std::endl;
       std::cout << "Close: " << market.current().close << std::endl;
