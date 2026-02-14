@@ -19,4 +19,5 @@ class Broker{
         // Getter functions for debugging
         State getState() const;
         bool isOpen() const;
+        double getUnrealizedPL(double price) const;
 };

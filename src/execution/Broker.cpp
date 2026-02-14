@@ -54,3 +54,16 @@ bool Broker::isOpen() const {
         return false;
     }
 }
+
+double Broker::getUnrealizedPL(double price) const{
+    if(_currentState == State::FLAT){
+        return 0.0;
+    }
+    if(_currentState == State::LONG){
+        return (price-_entryPrice) * _quantity;
+    }
+    if(_currentState == State::SHORT){
+        return (_entryPrice-price) * _quantity;
+    }
+    return 0.0;
+}
